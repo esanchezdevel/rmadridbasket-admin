@@ -22,15 +22,11 @@ public class GameStatsModel {
 		System.out.println("Processing URL: " + statsUrl);
 
 		try {
-			String html = Jsoup.connect(statsUrl).get().html();
 			Document document = Jsoup.connect(statsUrl).get();
 
 			Elements tables = document.select("table");
 
-			//Print local team
 			List<PlayerStats> localTeam = getTeamStats(1, tables);
-
-			//Print visitor team
 			List<PlayerStats> visitorTeam = getTeamStats(2, tables);
 
 			System.out.println("Local:");
