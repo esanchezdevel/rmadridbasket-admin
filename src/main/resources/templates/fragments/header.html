@@ -1,0 +1,26 @@
+<head th:fragment="head"> 
+    <title th:text="${title}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="description" th:content="${description}"/>
+    <meta name="keywords" th:content="${keywords}"/>
+    <meta name="author" th:content="${author}" />
+	<meta name="copyright" th:content="${copyright}" />
+	<meta charset="utf-8"/>
+	
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Quantico:ital@1&display=swap" rel="stylesheet">
+	
+	<link rel="stylesheet" th:href="@{/css/styles.css}">
+	
+	<script type="text/javascript">	
+		function showMenu() {
+			  var x = document.getElementById("myTopnav");
+			  if (x.className === "topnav") {
+			    x.className += " responsive";
+			  } else {
+			    x.className = "topnav";
+			  }
+			} 
+	</script>
+</head>

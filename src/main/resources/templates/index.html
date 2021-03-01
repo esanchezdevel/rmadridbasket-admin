@@ -1,13 +1,14 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-	<title>Admin Panel</title>
-</head>
+<head th:replace="fragments/header :: head"></head>
 <body>
-<h2>Añadir Partido:</h2>
-<form action="/Admin/ProcessStats" method="POST">
-	<input type="text" name="stats_url">
-	<input type="submit" name="submit" value="Procesar">
-</form>
+<div class="page-container">
+	<div class="content-wrap">
+		<div th:replace="fragments/titleNavMenu :: titleNavMenu"></div>
+	
+	
+	<footer th:replace="fragments/footer :: footer"></footer>
+	</div>
+</div>
 </body>
 </html>

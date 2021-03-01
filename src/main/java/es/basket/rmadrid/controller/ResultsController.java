@@ -8,32 +8,28 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import es.basket.rmadrid.model.ResultsModel;
-import es.basket.rmadrid.model.IndexModel;
 
 @Controller
-public class AdminController {
+public class ResultsController {
 
 	@Autowired
-	private IndexModel indexModel;
+	private ResultsModel resultsModel;
 	
-	@Autowired
-	private ResultsModel gameStatsModel;
-	
-	@GetMapping("/Admin")
-	public String admin(Model model) {
+	@GetMapping("/Admin/Results")
+	public String processStats(Model model) {
 		
-		indexModel.execute(model);
-		
-		return "index";
+		return "processed";
 	}
 	
-	@PostMapping("/Admin/ProcessStats")
+	
+	@PostMapping("/Admin/Results")
 	public String processStats(@RequestParam("stats_url") String statsUrl, Model model) {
 				
 		model.addAttribute("statsUrl", statsUrl);
 		
-		gameStatsModel.execute(model);
+		resultsModel.execute(model);
 		
 		return "processed";
 	}
+	
 }

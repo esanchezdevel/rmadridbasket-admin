@@ -14,8 +14,9 @@ import org.springframework.ui.Model;
 import es.basket.rmadrid.entity.PlayerStats;
 
 @Component
-public class GameStatsModel {
+public class ResultsModel implements Models {
 
+	@Override
 	public void execute(Model model) {
 
 		String statsUrl = (String) model.getAttribute("statsUrl");

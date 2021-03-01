@@ -1,0 +1,11 @@
+<div th:fragment="titleNavMenu">		
+	<header>
+		<a id="site-title" href="/"><h1 th:text="${title}"/></a>
+	</header>
+	<nav>		
+		<div class="topnav" id="myTopnav">
+			<a th:each="item: ${menu}" th:href="${item.link}" th:utext="${item.item}" />
+			<a href="javascript:void(0);" class="icon" onclick="showMenu()">&#9776;</a>
+		</div> 
+	</nav>
+</div>
