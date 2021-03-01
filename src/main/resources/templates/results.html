@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head"></head>
+<body>
+<div class="page-container">
+	<div class="content-wrap">
+		<div th:replace="fragments/titleNavMenu :: titleNavMenu"></div>
+	
+			<form action="/Admin/Results" method="POST" id="resultsForm">
+				<input type="text" size="50", name="resultUrl">
+				<input type="submit" name="sendResult" value="Procesar">
+			</form>
+			<div id="result"></div>
+	
+		<footer th:replace="fragments/footer :: footer"></footer>
+	</div>
+</div>
+
+<script>
+// Attach a submit handler to the form
+$( "#resultsForm" ).submit(function( event ) {
+ 
+  // Stop form from submitting normally
+  event.preventDefault();
+ 
+  // Get some values from elements on the page:
+  var $form = $( this ),
+    data = $form.find( "input[name='resultUrl']" ).val(),
+    url = $form.attr( "action" );
+ 
+  // Send the data using post
+  var posting = $.post( url, { resultUrl: data } );
+ 
+  // Put the results in a div
+  posting.done(function( data ) {
+    var content = $( data ).find( "#content" );
+    $( "#result" ).empty().append( content );
+  });
+});
+</script>
+</body>
+</html>

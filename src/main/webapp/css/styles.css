@@ -1,0 +1,408 @@
+@charset "UTF-8";
+
+/*
+COLORS USED
+===========
+purple: 8C008A
+light-purple: D8ADDE
+light-grey: DBDBDB
+orange: 9F6A00
+*/
+body {
+	font-family: Arial;
+	background-color: white;
+	min-height: 100vh;
+}
+
+header {
+	color: #8C008A;
+}
+
+header h1 {
+	color: #8C008A;
+	font-family: 'Open Sans Condensed', sans-serif;
+	font-size: 64px;
+	font-weight: 700;
+	line-height: 64px;
+	margin: 0 0 0;
+	padding: 20px 30px;
+	text-align: left;
+	text-transform: uppercase;
+	text-shadow: 2px 2px #D8ADDE;
+}
+
+h2 {
+	color: #8C008A;
+	font-family: 'Open Sans Condensed', sans-serif;
+	font-size: 35px;
+	font-weight: 700;
+	line-height: 64px;
+	margin: 0 0 0;
+	padding: 20px 30px;
+	text-align: left;
+	text-transform: uppercase;
+	text-shadow: 2px 2px #D8ADDE;
+}
+
+h3 {
+	color: #8C008A;
+	font-family: 'Open Sans Condensed', sans-serif;
+	font-size: 25px;
+	font-weight: 700;
+	line-height: 40px;
+	margin: 0 0 0;
+	padding: 20px 30px;
+	text-align: left;
+	text-transform: uppercase;
+}
+
+a {
+	outline: 0;
+}
+
+#site-title {
+	text-decoration: none;
+}
+
+.section-title {
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.news-title {
+	padding-top: 0px;
+	padding-bottom: 0px;
+	width: 700px;
+	margin-right: 0px;
+	padding-right: 0px;
+}
+
+hr {
+	border-top: 0.1px solid;
+	border-bottom: 0px solid;
+}
+
+.news-content-preview {
+	margin-top: 0px;
+	margin-bottom: 5px;
+	margin-left: 30px;
+	margin-right: 0px;
+	width: 700px;
+	line-height: 1.5em; /*for space between lines*/
+}
+
+.index-article {
+	width: 730px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-bottom: 35px;
+	box-shadow: 4px 4px #D8ADDE;
+}
+
+.index-article a {
+	text-decoration: none;
+	color: black;
+}
+
+.odd-background {
+	background-color: #DBDBDB;
+}
+
+#last-result h2 {
+	padding-top: 0px;
+	padding-bottom: 0px;
+	font-size: 25px;
+}
+
+#last-result table {
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 20px;
+	width: 90%;
+	border: none;
+	border-collapse: collapse;
+	box-shadow: 4px 4px #D8ADDE;
+}
+
+#last-result th {
+	color: #8C008A;
+	font-size: 25px;
+	text-align: center;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	background-color: #DBDBDB;
+}
+
+#last-result td {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+#team-left {
+	font-size: 25px;
+	padding-right: 5px;
+	text-align: right;
+	width: 42%;
+	background-color: #8C008A;
+	color: white;
+	font-weight: bold;
+	font-style: italic;
+	border-top: 1px solid #8C008A;
+}
+
+#team-right {
+	font-size: 25px;
+	padding-left: 5px;
+	text-align: left;
+	width: 42%;
+	background-color: #8C008A;
+	color: white;
+	font-weight: bold;
+	font-style: italic;
+	border-top: 1px solid #8C008A;
+}
+
+.result {
+	text-align: center;
+	width: 8%;
+	background-color: #D8ADDE;
+	border: 1px solid #8C008A;
+	font-family: 'Quantico', sans-serif;
+	color: #9F6A00;
+	font-size: 35px;
+}
+
+#navigation-bar {
+	position: absolute;
+	top: 450px;
+	left: 800px;
+}
+
+#navigation-bar h3 {
+	padding-bottom: 10px;
+	padding-top: 10px;
+	padding-left: 10px;
+}
+
+#navigation-bar  ul {
+	list-style: none;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 10px;
+	margin-top: 0px;
+}
+
+#navigation-bar ul li {
+	padding-top: 10px;
+	padding-bottom: 20px;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-bottom: 5px;
+	outline: 1px solid #DBDBDB;
+	width: 100%;
+	height: 20px;
+}
+
+.next-games-left {
+	display: block;
+	float: left;
+}
+
+.next-games-right {
+	display: block;
+	float: right;
+}
+
+.next-games-bottom {
+	font-size: 15px;
+	font-weight: bold;
+	padding-top: 5px;
+}
+
+.topnav {
+	background-color: #333;
+	overflow: hidden;
+	background-color: black;
+	font-size: 18px;
+	margin-top: 10 0 0;
+	padding-left: 30px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.topnav a {
+	float: left;
+	display: block;
+	color: white;
+	text-decoration: none;
+	padding-right: 10px;
+	padding-left: 10px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+.topnav a:hover {
+	background-color: #8C008A;
+	color: white;
+}
+
+.topnav .icon {
+	display: none;
+}
+
+.page-container {
+	position: relative;
+	min-height: 100vh;
+}
+
+.content-wrap {
+	padding-bottom: 2.5rem;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;
+  text-align: center;
+}
+
+#contact-whoweare p {
+	padding-left: 30px;
+	margin-top: 0px;
+}
+
+#contact-contact-info article ul{
+	list-style: none;
+	padding-left: 30px;
+	margin-top: 0px;
+}
+
+@media screen and (max-width:600px) {
+	
+	.topnav {
+		width: 90%;
+	}
+	
+	.topnav a {
+		display: none;
+	}
+	
+	.topnav .icon {
+		float: right;
+		display: block;
+		font-size: 30px;
+	}
+	
+	.topnav.responsive {
+		position: relative;
+	}
+	
+	.topnav.responsive a.icon {
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+	
+	.topnav.responsive a {
+		float: none;
+		display: block;
+		text-align: left;
+	}
+	
+	.topnav.responsive {
+		float: none;
+	}
+	
+	.topnav.responsive {
+		position: relative;
+	}
+	
+	.topnav.responsive {
+		display: block;
+		width: 100%;
+		text-align: left;
+		padding-left: 0px;
+	}
+	
+	header h1 {
+		color: #8C008A;
+		font-family: 'Open Sans Condensed', sans-serif;
+		font-size: 45px;
+		font-weight: 700;
+		line-height: 50px;
+		margin: 0 0 0;
+		padding: 20px 30px;
+		text-align: left;
+		text-transform: uppercase;
+		text-shadow: 2px 2px #D8ADDE;
+	}
+	
+	h2 {
+		color: #8C008A;
+		font-family: 'Open Sans Condensed', sans-serif;
+		font-size: 25px;
+		font-weight: 700;
+		line-height: 35px;
+		margin: 0 0 0;
+		padding: 20px 10px;
+		text-align: left;
+		text-transform: uppercase;
+		text-shadow: 2px 2px #D8ADDE;
+	}
+	
+	
+	h3 {
+		color: #8C008A;
+		font-family: 'Open Sans Condensed', sans-serif;
+		font-size: 20px;
+		font-weight: 700;
+		line-height: 25px;
+		margin-bottom: 10px;
+		padding: 20px 10px;
+		text-align: left;
+		text-transform: uppercase;
+	}
+	
+	hr {
+		visibility: hidden;
+	}
+	
+	#last-result {
+		width: 100%;
+	}
+	
+	#last-result header {
+		visibility: hidden;
+	}
+	
+	#last-result table {
+		float: left;
+		margin-top: 0px;
+		width: 100%;
+	}
+	
+	#last-result th {
+		font-size: 15px;
+	}
+	
+	#last-result td {
+		font-size: 15px;
+	}
+	
+	.news-title {
+		width: 95%;
+	}
+	
+	.news-content-preview {
+		margin-left: 10px;
+		width: 95%;
+		font-size: 15px;
+	}
+	
+	.index-article {
+		width: 100%;
+	}
+}
