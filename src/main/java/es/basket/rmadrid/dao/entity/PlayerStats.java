@@ -1,5 +1,6 @@
 package es.basket.rmadrid.dao.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.JoinColumn;
@@ -23,14 +24,29 @@ public class PlayerStats extends BaseEntity {
 	private String minutes;
 	private String points;
 	private String fg2;
+	
+	@Column(name = "fg2_rate")
 	private String fg2Rate;
+	
 	private String fg3;
+	
+	@Column(name = "fg3_rate")
 	private String fg3Rate;
+	
 	private String fg1;
+	
+	@Column(name = "fg1_rate")
 	private String fg1Rate;
+	
+	@Column(name = "total_rebounds")
 	private String totalRebounds;
+	
+	@Column(name = "defensive_rebounds")
 	private String defensiveRebounds;
+	
+	@Column(name = "offensive_rebounds")
 	private String offensiveRebounds;
+	
 	private String assists;
 	private String steals;
 	private String loses;
@@ -39,7 +55,10 @@ public class PlayerStats extends BaseEntity {
 	private String blocksReceived;
 	private String slams;
 	private String fouls;
+	
+	@Column(name = "fouls_received")
 	private String foulsReceived;
+	
 	private String difference;
 	private String rate;
 	

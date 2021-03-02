@@ -35,15 +35,9 @@ public class Games extends BaseEntity {
     private String round;
     
     private Date date;
-
-	private Boolean played;
 	
 	private String court;
 	
-	@ManyToOne
-	@JoinColumn(name = "channel_id")
-	private Channels channel;
-
 	@OneToMany(mappedBy = "game")
     private List<PlayerStats> playerStats;
 	
@@ -103,14 +97,6 @@ public class Games extends BaseEntity {
 		this.date = date;
 	}
 
-	public Boolean getPlayed() {
-		return played;
-	}
-
-	public void setPlayed(Boolean played) {
-		this.played = played;
-	}
-
 	public String getCourt() {
 		return court;
 	}
@@ -119,11 +105,11 @@ public class Games extends BaseEntity {
 		this.court = court;
 	}
 
-	public Channels getChannel() {
-		return channel;
+	public List<PlayerStats> getPlayerStats() {
+		return playerStats;
 	}
 
-	public void setChannel(Channels channel) {
-		this.channel = channel;
+	public void setPlayerStats(List<PlayerStats> playerStats) {
+		this.playerStats = playerStats;
 	}
 }

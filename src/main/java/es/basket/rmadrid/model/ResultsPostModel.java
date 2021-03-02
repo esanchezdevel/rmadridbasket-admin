@@ -1,7 +1,10 @@
 package es.basket.rmadrid.model;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.jsoup.Jsoup;
@@ -11,7 +14,9 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
+import es.basket.rmadrid.dao.entity.Games;
 import es.basket.rmadrid.dao.entity.PlayerStats;
+import es.basket.rmadrid.dao.entity.Tournaments;
 
 @Component
 public class ResultsPostModel implements Models {
@@ -72,25 +77,39 @@ public class ResultsPostModel implements Models {
 				
 				System.out.println("LocalScore=" + localScore + " VisitScore=" + visitorScore);
 				
-				List<PlayerStats> localTeam = getTeamStats(1, tables);
-				List<PlayerStats> visitorTeam = getTeamStats(2, tables);
+				List<PlayerStats> playerStatsList = new ArrayList<PlayerStats>();
+				getTeamStats(1, tables, playerStatsList, true);
+				getTeamStats(2, tables, playerStatsList, false);
 
-				System.out.println("Local:");
-				for (PlayerStats player : localTeam) {
-					System.out.println(player);
-				}
-
-				System.out.println("Visitor:");
-				for (PlayerStats player : visitorTeam) {
-					System.out.println(player);
-				}
-
+				Games game = new Games();
+				game.setLocal(localTeamName);
+				game.setVisitor(visitorTeamName);
+				game.setScoreLocal(localScore);
+				game.setScoreVisitor(visitorScore);
+				game.setTournament(new Tournaments()); //TODO set the correct one 
+				game.setRound(round);
+				game.setDate(createDate(date, time));
+				game.setCourt(court);
+				game.setPlayerStats(playerStatsList);
+				
 				System.out.println();
 			} catch (IOException e) {
 				System.out.println("Error downloading page");
 			}
 		} else if (isEuroleagueUrl(statsUrl)) {
 			// TODO get info from a euroleague page
+		}
+	}
+
+	private Date createDate(String date, String time) {
+		
+		date = date + " " + time;
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		try {
+			return sdf.parse(date);
+		} catch (ParseException e) {
+			System.out.println("Error parsing date: " + e.getMessage());
+			return new Date();
 		}
 	}
 
@@ -107,15 +126,14 @@ public class ResultsPostModel implements Models {
 				&& !tds.get(0).text().equalsIgnoreCase("E") && !tds.get(0).text().equalsIgnoreCase("5f");
 	}
 
-	private List<PlayerStats> getTeamStats(int team, Elements tables) {
-
-		List<PlayerStats> teamStats = new ArrayList<PlayerStats>();
+	private void getTeamStats(int team, Elements tables, List<PlayerStats> playerStatsList, boolean isLocal) {
 
 		for (Element row : tables.get(team).select("tr")) {
 			Elements tds = row.select("td:not([rowspan])");
 			if (isPlayerRow(tds)) {
 
 				PlayerStats playerStats = new PlayerStats();
+				playerStats.setLocal_team(isLocal);
 				playerStats.setNumber(tds.get(0).text());
 				playerStats.setName(tds.get(1).text());
 				playerStats.setMinutes(tds.get(2).text());
@@ -150,9 +168,8 @@ public class ResultsPostModel implements Models {
 				playerStats.setDifference(tds.get(21).text());
 				playerStats.setRate(tds.get(22).text());
 
-				teamStats.add(playerStats);
+				playerStatsList.add(playerStats);
 			}
 		}
-		return teamStats;
 	}
 }
