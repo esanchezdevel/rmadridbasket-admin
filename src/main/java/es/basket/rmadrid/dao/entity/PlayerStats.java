@@ -1,7 +1,23 @@
-package es.basket.rmadrid.entity;
+package es.basket.rmadrid.dao.entity;
 
-public class PlayerStats {
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+@Entity
+@Table(name = "player_stats")
+@EntityListeners(AuditingEntityListener.class)
+public class PlayerStats extends BaseEntity {
 	
+	@ManyToOne
+	@JoinColumn(name = "game_id")
+	private Games game;
+	
+	private boolean local_team;
 	private String number;
 	private String name;
 	private String minutes;
@@ -27,6 +43,18 @@ public class PlayerStats {
 	private String difference;
 	private String rate;
 	
+	public Games getGame() {
+		return game;
+	}
+	public void setGame(Games game) {
+		this.game = game;
+	}
+	public boolean isLocal_team() {
+		return local_team;
+	}
+	public void setLocal_team(boolean local_team) {
+		this.local_team = local_team;
+	}
 	public String getNumber() {
 		return number;
 	}

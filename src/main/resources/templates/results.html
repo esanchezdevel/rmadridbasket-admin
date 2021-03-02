@@ -33,8 +33,7 @@ $( "#resultsForm" ).submit(function( event ) {
  
   // Put the results in a div
   posting.done(function( data ) {
-    var content = $( data ).find( "#content" );
-    $( "#result" ).empty().append( content );
+    $( "#result" ).empty().append( data );
   });
 });
 </script>
