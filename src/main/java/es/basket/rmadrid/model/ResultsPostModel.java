@@ -11,16 +11,21 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
 import es.basket.rmadrid.dao.entity.Games;
 import es.basket.rmadrid.dao.entity.PlayerStats;
 import es.basket.rmadrid.dao.entity.Tournaments;
+import es.basket.rmadrid.dao.repository.GamesRepository;
 
 @Component
 public class ResultsPostModel implements Models {
 
+	@Autowired
+	private GamesRepository gameRepository;
+	
 	@Override
 	public void execute(Model model) {
 
@@ -91,6 +96,8 @@ public class ResultsPostModel implements Models {
 				game.setDate(createDate(date, time));
 				game.setCourt(court);
 				game.setPlayerStats(playerStatsList);
+				
+				gameRepository.save(game);
 				
 				System.out.println();
 			} catch (IOException e) {
