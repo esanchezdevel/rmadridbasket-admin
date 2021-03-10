@@ -19,12 +19,13 @@ import es.basket.rmadrid.dao.entity.Games;
 import es.basket.rmadrid.dao.entity.PlayerStats;
 import es.basket.rmadrid.dao.entity.Tournaments;
 import es.basket.rmadrid.dao.repository.GamesRepository;
+import es.basket.rmadrid.dao.repository.PlayerStatsRepository;
 
 @Component
 public class ResultsPostModel implements Models {
 
 	@Autowired
-	private GamesRepository gameRepository;
+	private PlayerStatsRepository playerStatsRepository;
 	
 	@Override
 	public void execute(Model model) {
@@ -82,22 +83,29 @@ public class ResultsPostModel implements Models {
 				
 				System.out.println("LocalScore=" + localScore + " VisitScore=" + visitorScore);
 				
-				List<PlayerStats> playerStatsList = new ArrayList<PlayerStats>();
-				getTeamStats(1, tables, playerStatsList, true);
-				getTeamStats(2, tables, playerStatsList, false);
-
+				
 				Games game = new Games();
 				game.setLocal(localTeamName);
 				game.setVisitor(visitorTeamName);
 				game.setScoreLocal(localScore);
 				game.setScoreVisitor(visitorScore);
-				game.setTournament(new Tournaments()); //TODO set the correct one 
+				
+				Tournaments tournament = new Tournaments();
+				tournament.setId(1);
+				game.setTournament(tournament); 
 				game.setRound(round);
 				game.setDate(createDate(date, time));
 				game.setCourt(court);
-				game.setPlayerStats(playerStatsList);
+				game.setUpdated(new Date());
 				
-				gameRepository.save(game);
+				List<PlayerStats> playerStatsList = new ArrayList<PlayerStats>();
+				getTeamStats(1, tables, playerStatsList, true);
+				getTeamStats(2, tables, playerStatsList, false);
+				
+				for (PlayerStats player : playerStatsList) {					
+					player.setGame(game);
+					playerStatsRepository.save(player);
+				}
 				
 				System.out.println();
 			} catch (IOException e) {
@@ -144,37 +152,38 @@ public class ResultsPostModel implements Models {
 				playerStats.setNumber(tds.get(0).text());
 				playerStats.setName(tds.get(1).text());
 				playerStats.setMinutes(tds.get(2).text());
-				playerStats.setPoints(tds.get(3).text());
+				playerStats.setPoints((tds.get(3).text().equals("")) ? 0 : Integer.parseInt(tds.get(3).text()));
 				playerStats.setFg2(tds.get(4).text());
 				playerStats.setFg2Rate(tds.get(5).text());
 				playerStats.setFg3(tds.get(6).text());
 				playerStats.setFg3Rate(tds.get(7).text());
 				playerStats.setFg1(tds.get(8).text());
 				playerStats.setFg1Rate(tds.get(9).text());
-				playerStats.setTotalRebounds(tds.get(10).text());
+				playerStats.setTotalRebounds((tds.get(10).text().equals("")) ? 0 : Integer.parseInt(tds.get(10).text()));
 
 				if (!tds.get(11).text().isEmpty() && tds.get(11).text().contains("+")) {
 					String[] rebounds = tds.get(11).text().split("\\+");
 
-					playerStats.setDefensiveRebounds(rebounds[0]);
-					playerStats.setOffensiveRebounds(rebounds[1]);
+					playerStats.setDefensiveRebounds(Integer.parseInt(rebounds[0]));
+					playerStats.setOffensiveRebounds(Integer.parseInt(rebounds[1]));
 				} else {
-					playerStats.setDefensiveRebounds("");
-					playerStats.setOffensiveRebounds("");
+					playerStats.setDefensiveRebounds(0);
+					playerStats.setOffensiveRebounds(0);
 				}
 
-				playerStats.setAssists(tds.get(12).text());
-				playerStats.setSteals(tds.get(13).text());
-				playerStats.setLoses(tds.get(14).text());
-				playerStats.setTransitions(tds.get(15).text());
-				playerStats.setBlocks(tds.get(16).text());
-				playerStats.setBlocksReceived(tds.get(17).text());
-				playerStats.setSlams(tds.get(18).text());
-				playerStats.setFouls(tds.get(19).text());
-				playerStats.setFoulsReceived(tds.get(20).text());
+				playerStats.setAssists((tds.get(12).text().equals("")) ? 0 : Integer.parseInt(tds.get(12).text()));
+				playerStats.setSteals((tds.get(13).text().equals("")) ? 0 : Integer.parseInt(tds.get(13).text()));
+				playerStats.setLoses((tds.get(14).text().equals("")) ? 0 : Integer.parseInt(tds.get(14).text()));
+				playerStats.setTransitions((tds.get(15).text().equals("")) ? 0 : Integer.parseInt(tds.get(15).text()));
+				playerStats.setBlocks((tds.get(16).text().equals("")) ? 0 : Integer.parseInt(tds.get(16).text()));
+				playerStats.setBlocksReceived((tds.get(17).text().equals("")) ? 0 : Integer.parseInt(tds.get(17).text()));
+				playerStats.setSlams((tds.get(18).text().equals("")) ? 0 : Integer.parseInt(tds.get(18).text()));
+				playerStats.setFouls((tds.get(19).text().equals("")) ? 0 : Integer.parseInt(tds.get(19).text()));
+				playerStats.setFoulsReceived((tds.get(20).text().equals("")) ? 0 : Integer.parseInt(tds.get(20).text()));
 				playerStats.setDifference(tds.get(21).text());
 				playerStats.setRate(tds.get(22).text());
-
+				playerStats.setUpdated(new Date());
+				
 				playerStatsList.add(playerStats);
 			}
 		}
