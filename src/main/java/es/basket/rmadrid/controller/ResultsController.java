@@ -39,7 +39,10 @@ public class ResultsController {
 		
 		resultsPostModel.execute(model);
 		
-		return ResponseEntity.ok(HttpStatus.OK);
+		if (model.getAttribute("result") != null && model.getAttribute("result").equals("error"))
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		else
+			return ResponseEntity.ok(HttpStatus.OK);
 	}
 	
 }

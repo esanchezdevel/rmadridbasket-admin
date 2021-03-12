@@ -112,7 +112,75 @@ public class ResultsPostModel implements Models {
 				System.out.println("Error downloading page");
 			}
 		} else if (isEuroleagueUrl(statsUrl)) {
-			// TODO get info from a euroleague page
+			
+			try {
+				//TODO =======================================
+				Document document = Jsoup.connect(statsUrl).get();
+				
+				Elements tables = document.select("table");
+
+				//Table 0 is the quarters
+				System.out.println("==========================");
+				int count = 0;
+				int localScore = 0;
+				int visitorScore = 0;
+				String localTeamName = null;
+				String visitorTeamName = null;
+				for (Element row : tables.get(0).select("tr")) {
+					Elements tds = row.select("td:not([rowspan])");
+					
+					if (count == 0) {
+						count++;
+						continue;
+					}
+					
+					if(count == 1)
+						localTeamName = tds.get(0).text();
+					else
+						visitorTeamName = tds.get(0).text();
+					
+					int quarter1 = Integer.parseInt(tds.get(1).text());
+					int quarter2 = Integer.parseInt(tds.get(2).text());
+					int quarter3 = Integer.parseInt(tds.get(3).text());
+					int quarter4 = Integer.parseInt(tds.get(4).text());
+					
+					if (count == 1) 
+						localScore = quarter1 + quarter2 + quarter3 + quarter4;
+					else
+						visitorScore = quarter1 + quarter2 + quarter3 + quarter4;
+					
+					count++;
+				}
+				
+				System.out.println(localTeamName + ": " + localScore + " " + visitorTeamName + ": " + visitorScore);
+				
+				//Table 2 is the Local team
+				System.out.println("==========================");
+				for (Element row : tables.get(2).select("tr")) {
+					Elements tds = row.select("td:not([rowspan])");
+					
+					for (Element td : tds) {
+						System.out.println("-> " + td.text());
+					}
+				}
+				
+				//Table 3 is the visitor team
+				System.out.println("==========================");
+				for (Element row : tables.get(3).select("tr")) {
+					Elements tds = row.select("td:not([rowspan])");
+					
+					for (Element td : tds) {
+						System.out.println("-> " + td.text());
+					}
+				}
+				
+				//=============================================
+			} catch (IOException e) {
+				System.out.println("Error downloading page");
+			}
+			
+		} else {
+			model.addAttribute("result", "error");
 		}
 	}
 
