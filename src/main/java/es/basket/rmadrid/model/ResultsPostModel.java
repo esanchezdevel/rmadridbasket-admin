@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -154,24 +155,48 @@ public class ResultsPostModel implements Models {
 				
 				System.out.println(localTeamName + ": " + localScore + " " + visitorTeamName + ": " + visitorScore);
 				
-				//Table 2 is the Local team
-				System.out.println("==========================");
-				for (Element row : tables.get(2).select("tr")) {
-					Elements tds = row.select("td:not([rowspan])");
+				Elements spans = document.select(".gc-title").select("span");
+				
+				for (Element e : spans) {
 					
-					for (Element td : tds) {
-						System.out.println("-> " + td.text());
-					}
+					System.out.println("->" + e.text());
 				}
 				
-				//Table 3 is the visitor team
-				System.out.println("==========================");
-				for (Element row : tables.get(3).select("tr")) {
-					Elements tds = row.select("td:not([rowspan])");
-					
-					for (Element td : tds) {
-						System.out.println("-> " + td.text());
-					}
+				String round = spans.get(2).text();
+				round.replace("Round", "Jornada");
+				
+				System.out.println("Round: " + round);
+				
+				String date = document.select(".dates").get(0).select(".date").text().split(" CET: ")[0];
+				String time = document.select(".dates").get(0).select(".date").text().split(" CET: ")[1];
+				
+				System.out.println("date: " + date + " time: " + time );
+				
+				String court = document.select(".stadium").text();
+				
+				System.out.println("court: " + court);
+				
+				Games game = new Games();
+				game.setLocal(localTeamName);
+				game.setVisitor(visitorTeamName);
+				game.setScoreLocal(localScore);
+				game.setScoreVisitor(visitorScore);
+				
+				Tournaments tournament = new Tournaments();
+				tournament.setId(2);
+				game.setTournament(tournament); 
+				game.setRound(round);
+				game.setDate(createEuroDate(date, time));
+				game.setCourt(court);
+				game.setUpdated(new Date());
+				
+				List<PlayerStats> playerStatsList = new ArrayList<PlayerStats>();
+				getEuroTeamStats(2, tables, playerStatsList, true);
+				getEuroTeamStats(3, tables, playerStatsList, false);
+				
+				for (PlayerStats player : playerStatsList) {					
+					player.setGame(game);
+					playerStatsRepository.save(player);
 				}
 				
 				//=============================================
@@ -188,6 +213,19 @@ public class ResultsPostModel implements Models {
 		
 		date = date + " " + time;
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		try {
+			return sdf.parse(date);
+		} catch (ParseException e) {
+			System.out.println("Error parsing date: " + e.getMessage());
+			return new Date();
+		}
+	}
+	
+	private Date createEuroDate(String date, String time) {
+		
+		date = date + " " + time;
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy HH:mm", Locale.US);
 		try {
 			return sdf.parse(date);
 		} catch (ParseException e) {
@@ -250,6 +288,48 @@ public class ResultsPostModel implements Models {
 				playerStats.setFoulsReceived((tds.get(20).text().equals("")) ? 0 : Integer.parseInt(tds.get(20).text()));
 				playerStats.setDifference(tds.get(21).text());
 				playerStats.setRate(tds.get(22).text());
+				playerStats.setUpdated(new Date());
+				
+				playerStatsList.add(playerStats);
+			}
+		}
+	}
+	
+	
+	private void getEuroTeamStats(int team, Elements tables, List<PlayerStats> playerStatsList, boolean isLocal) {
+
+		for (Element row : tables.get(team).select("tr")) {
+			Elements tds = row.select("td:not([rowspan])");
+			if (isPlayerRow(tds)) {
+
+				PlayerStats playerStats = new PlayerStats();
+				playerStats.setLocal_team(isLocal);
+				playerStats.setNumber(tds.get(0).text());
+				playerStats.setName(tds.get(1).text());
+				playerStats.setMinutes(tds.get(2).text());
+				playerStats.setPoints((tds.get(3).text().equals("") | tds.get(3).text().equals("-")) ? 0 : Integer.parseInt(tds.get(3).text()));
+				playerStats.setFg2(tds.get(4).text());
+				playerStats.setFg2Rate("");
+				playerStats.setFg3(tds.get(5).text());
+				playerStats.setFg3Rate("");
+				playerStats.setFg1(tds.get(6).text());
+				playerStats.setFg1Rate("");
+				playerStats.setTotalRebounds((tds.get(9).text().equals("") | tds.get(9).text().equals("-")) ? 0 : Integer.parseInt(tds.get(9).text()));
+
+				playerStats.setDefensiveRebounds((tds.get(8).text().equals("") | tds.get(8).text().equals("-")) ? 0 : Integer.parseInt(tds.get(8).text()));
+				playerStats.setOffensiveRebounds((tds.get(7).text().equals("") | tds.get(7).text().equals("-")) ? 0 : Integer.parseInt(tds.get(7).text()));
+
+				playerStats.setAssists((tds.get(10).text().equals("") | tds.get(10).text().equals("-")) ? 0 : Integer.parseInt(tds.get(10).text()));
+				playerStats.setSteals((tds.get(11).text().equals("") | tds.get(11).text().equals("-")) ? 0 : Integer.parseInt(tds.get(11).text()));
+				playerStats.setLoses((tds.get(12).text().equals("") | tds.get(12).text().equals("-")) ? 0 : Integer.parseInt(tds.get(12).text()));
+				playerStats.setTransitions(0);
+				playerStats.setBlocks((tds.get(13).text().equals("") | tds.get(13).text().equals("-")) ? 0 : Integer.parseInt(tds.get(13).text()));
+				playerStats.setBlocksReceived((tds.get(14).text().equals("") | tds.get(14).text().equals("-")) ? 0 : Integer.parseInt(tds.get(14).text()));
+				playerStats.setSlams(0);
+				playerStats.setFouls((tds.get(15).text().equals("") | tds.get(15).text().equals("-")) ? 0 : Integer.parseInt(tds.get(15).text()));
+				playerStats.setFoulsReceived((tds.get(16).text().equals("") | tds.get(16).text().equals("-")) ? 0 : Integer.parseInt(tds.get(16).text()));
+				playerStats.setDifference("");
+				playerStats.setRate(tds.get(17).text());
 				playerStats.setUpdated(new Date());
 				
 				playerStatsList.add(playerStats);
