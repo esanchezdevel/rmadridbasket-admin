@@ -1,8 +1,6 @@
 package es.basket.rmadrid.jsoup;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +16,7 @@ import es.basket.rmadrid.dao.entity.Games;
 import es.basket.rmadrid.dao.entity.PlayerStats;
 import es.basket.rmadrid.dao.entity.Tournaments;
 import es.basket.rmadrid.dao.repository.PlayerStatsRepository;
+import es.basket.rmadrid.utils.DateUtils;
 
 @Component
 public class ProcessACBGame implements ProcessJsoup {
@@ -32,9 +31,9 @@ public class ProcessACBGame implements ProcessJsoup {
 
 			Elements data = document.select(".datos_fecha");
 			String[] dataArray = data.text().split(" \\| ");
-			String round = dataArray[0];
-			String date = dataArray[1];
-			String time = dataArray[2];
+			String round = dataArray[0];			
+			String date = dataArray[1] + " " + dataArray[2];
+			
 			String court = data.select(".clase_mostrar1280").text();
 
 			Elements header = document.select(".cabecera_partido");
@@ -79,7 +78,7 @@ public class ProcessACBGame implements ProcessJsoup {
 			tournament.setId(1);
 			game.setTournament(tournament);
 			game.setRound(round);
-			game.setDate(createDate(date, time));
+			game.setDate(DateUtils.createDate(date, "dd/MM/yyyy HH:mm"));
 			game.setCourt(court);
 			game.setUpdated(new Date());
 
@@ -95,18 +94,6 @@ public class ProcessACBGame implements ProcessJsoup {
 			System.out.println();
 		} catch (IOException e) {
 			System.out.println("Error downloading page");
-		}
-	}
-
-	private Date createDate(String date, String time) {
-
-		date = date + " " + time;
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-		try {
-			return sdf.parse(date);
-		} catch (ParseException e) {
-			System.out.println("Error parsing date: " + e.getMessage());
-			return new Date();
 		}
 	}
 

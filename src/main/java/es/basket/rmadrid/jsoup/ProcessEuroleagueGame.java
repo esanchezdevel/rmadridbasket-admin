@@ -1,12 +1,9 @@
 package es.basket.rmadrid.jsoup;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -19,6 +16,7 @@ import es.basket.rmadrid.dao.entity.Games;
 import es.basket.rmadrid.dao.entity.PlayerStats;
 import es.basket.rmadrid.dao.entity.Tournaments;
 import es.basket.rmadrid.dao.repository.PlayerStatsRepository;
+import es.basket.rmadrid.utils.DateUtils;
 
 @Component
 public class ProcessEuroleagueGame implements ProcessJsoup {
@@ -76,9 +74,11 @@ public class ProcessEuroleagueGame implements ProcessJsoup {
 			String round = spans.get(2).text();
 			round.replace("Round", "Jornada");
 
-			String date = document.select(".dates").get(0).select(".date").text().split(" CET: ")[0];
-			String time = document.select(".dates").get(0).select(".date").text().split(" CET: ")[1];
-
+			String date = new StringBuilder(document.select(".dates").get(0).select(".date").text().split(" CET: ")[0])
+					.append(" ")
+					.append(document.select(".dates").get(0).select(".date").text().split(" CET: ")[1])
+					.toString();
+			
 			String court = document.select(".stadium").text();
 
 			Games game = new Games();
@@ -91,7 +91,7 @@ public class ProcessEuroleagueGame implements ProcessJsoup {
 			tournament.setId(2);
 			game.setTournament(tournament);
 			game.setRound(round);
-			game.setDate(createDate(date, time));
+			game.setDate(DateUtils.createDate(date, "MMMM dd, yyyy HH:mm"));
 			game.setCourt(court);
 			game.setUpdated(new Date());
 
@@ -105,19 +105,6 @@ public class ProcessEuroleagueGame implements ProcessJsoup {
 			}
 		} catch (IOException e) {
 			System.out.println("Error downloading page");
-		}
-	}
-
-	private Date createDate(String date, String time) {
-
-		date = date + " " + time;
-
-		SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy HH:mm", Locale.US);
-		try {
-			return sdf.parse(date);
-		} catch (ParseException e) {
-			System.out.println("Error parsing date: " + e.getMessage());
-			return new Date();
 		}
 	}
 
