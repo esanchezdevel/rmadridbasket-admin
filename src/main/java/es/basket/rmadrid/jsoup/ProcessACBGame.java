@@ -21,12 +21,12 @@ import es.basket.rmadrid.util.DateUtils;
 
 @Component
 public class ProcessACBGame implements ProcessJsoup {
-
+	
 	@Autowired
 	private PlayerStatsRepository playerStatsRepository;
 	
 	@Autowired
-	private FillPlayerStatsListService fillPlayerStatsService;
+	private FillPlayerStatsListService fillPlayerStatsListService;
 
 	@Override
 	public void process(String url) {
@@ -88,13 +88,13 @@ public class ProcessACBGame implements ProcessJsoup {
 
 			List<PlayerStats> playerStatsList = new ArrayList<PlayerStats>();
 			
-			fillPlayerStatsService.setParameters(1, tables, true, playerStatsList);
-			fillPlayerStatsService.execute();
+			fillPlayerStatsListService.setParameters(FillPlayerStatsListService.TYPE_ACB, 1, tables, true, playerStatsList);
+			fillPlayerStatsListService.execute();
 			
 			//TODO check that the playerStatsList is updated without get it.
 			
-			fillPlayerStatsService.setParameters(2, tables, false, playerStatsList);
-			fillPlayerStatsService.execute();
+			fillPlayerStatsListService.setParameters(FillPlayerStatsListService.TYPE_ACB, 2, tables, false, playerStatsList);
+			fillPlayerStatsListService.execute();
 			
 
 			for (PlayerStats player : playerStatsList) {
