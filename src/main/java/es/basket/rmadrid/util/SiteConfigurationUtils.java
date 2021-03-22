@@ -1,4 +1,4 @@
-package es.basket.rmadrid.utils;
+package es.basket.rmadrid.util;
 
 import java.util.List;
 

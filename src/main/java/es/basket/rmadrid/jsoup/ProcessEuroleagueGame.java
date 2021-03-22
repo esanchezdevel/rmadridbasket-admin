@@ -16,7 +16,7 @@ import es.basket.rmadrid.dao.entity.Games;
 import es.basket.rmadrid.dao.entity.PlayerStats;
 import es.basket.rmadrid.dao.entity.Tournaments;
 import es.basket.rmadrid.dao.repository.PlayerStatsRepository;
-import es.basket.rmadrid.utils.DateUtils;
+import es.basket.rmadrid.util.DateUtils;
 
 @Component
 public class ProcessEuroleagueGame implements ProcessJsoup {
@@ -96,8 +96,8 @@ public class ProcessEuroleagueGame implements ProcessJsoup {
 			game.setUpdated(new Date());
 
 			List<PlayerStats> playerStatsList = new ArrayList<PlayerStats>();
-			getEuroTeamStats(2, tables, playerStatsList, true);
-			getEuroTeamStats(3, tables, playerStatsList, false);
+			getTeamStats(2, tables, playerStatsList, true);
+			getTeamStats(3, tables, playerStatsList, false);
 
 			for (PlayerStats player : playerStatsList) {
 				player.setGame(game);
@@ -108,7 +108,7 @@ public class ProcessEuroleagueGame implements ProcessJsoup {
 		}
 	}
 
-	private void getEuroTeamStats(int team, Elements tables, List<PlayerStats> playerStatsList, boolean isLocal) {
+	private void getTeamStats(int team, Elements tables, List<PlayerStats> playerStatsList, boolean isLocal) {
 
 		for (Element row : tables.get(team).select("tr")) {
 			Elements tds = row.select("td:not([rowspan])");

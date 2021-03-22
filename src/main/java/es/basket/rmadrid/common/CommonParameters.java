@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import es.basket.rmadrid.dao.entity.SiteConfiguration;
 import es.basket.rmadrid.dao.repository.MenusRepository;
 import es.basket.rmadrid.dao.repository.SiteConfigurationRepository;
-import es.basket.rmadrid.utils.SiteConfigurationUtils;
+import es.basket.rmadrid.util.SiteConfigurationUtils;
 
 @Component
 public class CommonParameters {
