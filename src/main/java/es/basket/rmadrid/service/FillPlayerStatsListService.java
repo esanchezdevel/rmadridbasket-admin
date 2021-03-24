@@ -7,7 +7,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 
-import es.basket.rmadrid.dao.entity.PlayerStats;
+import es.basket.rmadrid.jpa.entity.PlayerStats;
 
 @Component
 public class FillPlayerStatsListService implements Services {

@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
-import es.basket.rmadrid.dao.entity.SiteConfiguration;
-import es.basket.rmadrid.dao.repository.MenusRepository;
-import es.basket.rmadrid.dao.repository.SiteConfigurationRepository;
+import es.basket.rmadrid.jpa.entity.SiteConfiguration;
+import es.basket.rmadrid.jpa.repository.MenusRepository;
+import es.basket.rmadrid.jpa.repository.SiteConfigurationRepository;
 import es.basket.rmadrid.util.SiteConfigurationUtils;
 
 @Component

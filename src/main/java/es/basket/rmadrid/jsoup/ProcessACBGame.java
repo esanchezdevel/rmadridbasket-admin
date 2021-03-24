@@ -12,10 +12,10 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import es.basket.rmadrid.dao.entity.Games;
-import es.basket.rmadrid.dao.entity.PlayerStats;
-import es.basket.rmadrid.dao.entity.Tournaments;
-import es.basket.rmadrid.dao.repository.PlayerStatsRepository;
+import es.basket.rmadrid.jpa.entity.Games;
+import es.basket.rmadrid.jpa.entity.PlayerStats;
+import es.basket.rmadrid.jpa.entity.Tournaments;
+import es.basket.rmadrid.jpa.repository.PlayerStatsRepository;
 import es.basket.rmadrid.service.FillPlayerStatsListService;
 import es.basket.rmadrid.util.DateUtils;
 

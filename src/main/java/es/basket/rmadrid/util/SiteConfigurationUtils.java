@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.ui.Model;
 
-import es.basket.rmadrid.dao.entity.SiteConfiguration;
+import es.basket.rmadrid.jpa.entity.SiteConfiguration;
 
 public class SiteConfigurationUtils {
 
