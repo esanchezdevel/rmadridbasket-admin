@@ -14,7 +14,6 @@ public class BaseModel implements Models {
 	
 	@Override
 	public void execute(Model model) {
-		
 		commonParameters.get(model);		
 	}
 
