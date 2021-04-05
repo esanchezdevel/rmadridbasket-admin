@@ -1,4 +1,3 @@
-#FROM alpine:3.13.2
 FROM openjdk:8-jdk-alpine
 
 #install system dependencies
