@@ -8,4 +8,4 @@ Build:
 docker build -t rmadridbasket-admin/alpine-server:1.0 .
 
 Run:
-docker run --rm -it rmadridbasket-admin/alpine-server:1.0 /bin/sh
+docker run --rm -it --name rmadridbasket-admin rmadridbasket-admin/alpine-server:1.0 /bin/sh
