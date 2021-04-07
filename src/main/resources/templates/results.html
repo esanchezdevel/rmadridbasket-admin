@@ -30,7 +30,9 @@
 				<input type="datetime-local" size="50", name="date">
 				<br/><br/>
 				<label for="tournament">Torneo:</label>
-				<input type="text" size="50", name="tournament" hint="Torneo">
+				<select name="tournament">
+					<option th:each="item: ${tournaments}" th:utext="${item.name}" th:value="${item.id}" />
+				</select>
 				<br/>
 				<input type="submit" name="sendSchedule" value="Procesar">
 			</form>
