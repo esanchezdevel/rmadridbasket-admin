@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
 @Component
-public class ResultsModel extends BaseModel implements Models{
+public class ResultsModel extends BaseModel implements Models<Model> {
 
 	public void execute(Model model) {
 		super.execute(model);

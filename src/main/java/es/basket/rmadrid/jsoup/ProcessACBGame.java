@@ -90,9 +90,7 @@ public class ProcessACBGame implements ProcessJsoup {
 			
 			fillPlayerStatsListService.setParameters(FillPlayerStatsListService.TYPE_ACB, 1, tables, true, playerStatsList);
 			fillPlayerStatsListService.execute();
-			
-			//TODO check that the playerStatsList is updated without get it.
-			
+						
 			fillPlayerStatsListService.setParameters(FillPlayerStatsListService.TYPE_ACB, 2, tables, false, playerStatsList);
 			fillPlayerStatsListService.execute();
 			

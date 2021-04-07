@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import es.basket.rmadrid.common.CommonParameters;
 
 @Component
-public class BaseModel implements Models {
+public class BaseModel implements Models<Model> {
 
 	@Autowired
 	private CommonParameters commonParameters;

@@ -8,7 +8,7 @@ import es.basket.rmadrid.jsoup.ProcessACBGame;
 import es.basket.rmadrid.jsoup.ProcessEuroleagueGame;
 
 @Component
-public class ResultsPostModel implements Models {
+public class ResultsPostModel implements Models<Model> {
 
 	@Autowired
 	private ProcessACBGame processACBGame;

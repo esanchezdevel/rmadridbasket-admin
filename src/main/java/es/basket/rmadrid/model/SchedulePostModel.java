@@ -3,21 +3,18 @@ package es.basket.rmadrid.model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.Model;
 
 import es.basket.rmadrid.controller.AdminController;
+import es.basket.rmadrid.jpa.entity.Schedule;
 
 @Component
-public class IndexModel extends BaseModel implements Models<Model> {
+public class SchedulePostModel implements Models<Schedule> {
 
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
-	
-	@Override
-	public void execute(Model model) {
-		
-		logger.debug("Executing Index Model");
-		
-		super.execute(model);
-	}
 
+	@Override
+	public void execute(Schedule schedule) {
+		
+		logger.debug("Register new game in the schedule: " + schedule);
+	}
 }

@@ -6,18 +6,41 @@
 	<div class="content-wrap">
 		<div th:replace="fragments/titleNavMenu :: titleNavMenu"></div>
 	
+			<h3>Registrar un Resultado:</h3>
 			<form action="/Admin/Results" method="POST" id="resultsForm">
 				<input type="text" size="50", name="resultUrl">
 				<input type="submit" name="sendResult" value="Procesar">
 			</form>
 			<div id="result"></div>
-	
+			
+			<br/>
+			
+			<h3>Registrar un Partido en el Calendario:</h3>
+			<form action="/Admin/Schedule" method="POST" id="scheduleForm">
+				<label for="local">Equipo Local:</label>
+				<input type="text" size="50", name="local">
+				<br/>
+				<label for="visitor">Equipo Visitante:</label>
+				<input type="text" size="50", name="visitor">
+				<br/>
+				<label for="court">Pabell&oacute;n:</label>
+				<input type="text" size="50", name="court">
+				<br/>
+				<label for="date">Fecha:</label>
+				<input type="datetime-local" size="50", name="date">
+				<br/><br/>
+				<label for="tournament">Torneo:</label>
+				<input type="text" size="50", name="tournament" hint="Torneo">
+				<br/>
+				<input type="submit" name="sendSchedule" value="Procesar">
+			</form>
+			<div id="resultSchedule"></div>	
+		
 		<footer th:replace="fragments/footer :: footer"></footer>
 	</div>
 </div>
 
 <script>
-// Attach a submit handler to the form
 $( "#resultsForm" ).submit(function( event ) {
  
   // Stop form from submitting normally
@@ -36,6 +59,27 @@ $( "#resultsForm" ).submit(function( event ) {
     $( "#result" ).empty().append( data );
   });
 });
+
+$( "#scheduleForm" ).submit(function( event ) {
+	 
+  // Stop form from submitting normally
+  event.preventDefault();
+ 
+  // Get some values from elements on the page:
+  var $form = $( this );
+  
+  var data = $form.serialize();
+  var url = $form.attr( "action" );
+  
+  // Send the data using post
+  var posting = $.post( url, data );
+ 
+  // Put the results in a div
+  posting.done(function( data ) {
+    $( "#resultSchedule" ).empty().append( data );
+  });
+});
+
 </script>
 </body>
 </html>
